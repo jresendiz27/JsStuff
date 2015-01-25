@@ -12,7 +12,7 @@ var pronouns = [
     'hasta', 'para', 'por', 'segun',
     'so', 'sin', 'sobre', 'tras'
 ];
-var specialChars = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n', 'ü': 'u'};
+var specialChars = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n', 'ü': 'u','[(]':'','[)]':''};
 //helper
 function SpanishHelper(wordGiven) {
     var filteredWord = wordGiven;
