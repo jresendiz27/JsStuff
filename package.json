@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node WebScrapping_PhantomJs.js"
+    "start": "phantomjs WebScrapping_PhantomJs.js"
   },
   "dependencies": {
     "phantomjs": "*",
-    "snowball": "*",
-    "mongoose": "*"
+    "snowball": "*"
     }
 }
