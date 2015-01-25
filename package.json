@@ -1,0 +1,13 @@
+{
+  "name": "WebScrapping_PhantomJs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node WebScrapping_PhantomJs.js"
+  },
+  "dependencies": {
+    "phantomjs": "*",
+    "snowball": "*",
+    "mongoose": "*"
+    }
+}
