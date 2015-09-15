@@ -7,6 +7,9 @@ var http = require("http"),
     response.write("Something went wrong, check log for further information");
     response.end();
   },
+  toType = function(obj) {
+    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+  },
   server = http.createServer(function createServer(request, response) {
     var path = url.parse(request.url).pathname;
     switch (path) {
@@ -50,7 +53,8 @@ server.listen(8888, function serverStarted() {
 var io = iolib.listen(server);
 io.sockets.on('connection', function connected(socket) {
   socket.on('microphoneData', function microphoneData(data) {
-    console.log(data.length);
-    socket.emit('microphoneStreaming', data);
+    console.log(data);
+    socket.emit('streaming', {audio:true, buffer : data.buffer});
+    //socket.emit('streaming', {'data':"OK"});
   });
 });

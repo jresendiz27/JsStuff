@@ -8,15 +8,42 @@
   <body>
     <script>
       var socket = io.connect();
-      $("#getMicrophoneData").on("click", function actionPerformed() {
-        console.log("Empieza transmisión");
+      function hasGetUserMedia() {
+        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                  navigator.mozGetUserMedia || navigator.msGetUserMedia);
+      }
+      $(document).ready(function documentReady() {
+        if(hasGetUserMedia()){
+          navigator.getMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+          navigator.getMedia({audio: true}, function success(localMediaStream) {
+            var audioContext = window.AudioContext || window.webkitAudioContext;
+            var context = new audioContext();
+            var volume = context.createGain();
+            var audioInput = context.createMediaStreamSource(localMediaStream);
+            audioInput.connect(volume);
+            console.error(context.sampleRate);
+            var recorder = context.createScriptProcessor(4096, 2, 2);
+            recorder.onaudioprocess = function audioProcess(e) {
+              console.log("Audio!");
+              var left = e.inputBuffer.getChannelData(0); //left
+              socket.emit('microphoneData', {audio:true, buffer : new Float32Array(left)});
+              //$("#content").append("<li>" + left + "</li>");
+            };
+            volume.connect(recorder);
+            recorder.connect(context.destination);
+          }, function error(e) {
+            console.log("Rejected");
+          });
+        } else {
+          alert("GetUserMedia is not defined on you browser");
+        }
       });
-      /*$(document).ready(function(){
-        $('#text').keypress(function(e){
-          socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
-        });
-      });*/
     </script>
-    <button id="getMicrophoneData"> Iniciar Transmisión </button>
+    <button id="getMicrophoneData"> Transmisión en proceso </button>
+    <hr>
+    <div id="content"></div>
   </body>
 </html>
