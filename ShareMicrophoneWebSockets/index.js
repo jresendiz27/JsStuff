@@ -1,4 +1,4 @@
-var http = require("http"),
+  var http = require("http"),
   url = require("url"),
   iolib = require("socket.io"),
   fs = require("fs"),
@@ -53,8 +53,7 @@ server.listen(8888, function serverStarted() {
 var io = iolib.listen(server);
 io.sockets.on('connection', function connected(socket) {
   socket.on('microphoneData', function microphoneData(data) {
-    console.log(data);
-    socket.emit('streaming', {audio:true, buffer : data.buffer});
+    socket.broadcast.emit('streaming', data);
     //socket.emit('streaming', {'data':"OK"});
   });
 });

@@ -29,8 +29,9 @@
             recorder.onaudioprocess = function audioProcess(e) {
               console.log("Audio!");
               var left = e.inputBuffer.getChannelData(0); //left
-              socket.emit('microphoneData', {audio:true, buffer : new Float32Array(left)});
-              //$("#content").append("<li>" + left + "</li>");
+              var array = new Float32Array(left);
+              console.log(array);
+              socket.emit('microphoneData', {audio:true, buffer: array});
             };
             volume.connect(recorder);
             recorder.connect(context.destination);

@@ -7,9 +7,10 @@
   <body>
     <div id="content">OK</div>
     <script>
-    var websocket = io.connect();
+    var websocket = io.connect("http://localhost:8888/");
+
     websocket.on('streaming', function(data){
-      console.log(data.audio);
+      console.log(data.buffer);
     });
     </script>
   </body>
